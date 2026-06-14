@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify Certificate — CertChain</title>
+  <meta name="description" content="Instantly verify the authenticity of a digital certificate against the blockchain. Upload a PDF or enter the SHA-256 hash.">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="/" class="navbar-brand">
+          <span class="logo-icon">🔗</span>
+          CertChain
+        </a>
+        <ul class="navbar-nav">
+          <li><a href="/admin.html">Institute Portal</a></li>
+          <li><a href="/verify.html" class="active">Verify Certificate</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="section">
+      <div class="container container-sm">
+
+        <!-- Page Header -->
+        <div style="text-align: center; margin-bottom: var(--space-2xl);" class="animate-slide-up">
+          <h1 style="font-size: 2.5rem; margin-bottom: var(--space-md);">
+            <span class="text-gradient">🔍 Certificate Verification</span>
+          </h1>
+          <p class="text-muted" style="font-size: 1.1rem; max-width: 500px; margin: 0 auto;">
+            Upload a candidate's certificate PDF or enter its hash to
+            instantly verify authenticity against the blockchain.
+          </p>
+        </div>
+
+        <!-- Verification Tabs -->
+        <div class="tabs animate-slide-up" style="animation-delay: 80ms;">
+          <button class="tab-btn active" data-tab="file" id="tab-file">Upload PDF</button>
+          <button class="tab-btn" data-tab="hash" id="tab-hash">Verify by Hash</button>
+        </div>
+
+        <!-- ═══ Tab: Upload PDF ═══ -->
+        <div class="tab-panel active" id="panel-file">
+          <div class="card animate-slide-up" style="animation-delay: 150ms;">
+            <form id="verify-file-form">
+              <div class="form-group">
+                <label class="form-label">Certificate PDF</label>
+                <div class="upload-zone" id="upload-zone-verify">
+                  <input type="file" accept=".pdf" id="file-verify" required>
+                  <div class="upload-icon">📄</div>
+                  <div class="upload-text">Drop the certificate PDF here or click to browse</div>
+                  <div class="upload-hint">The file will be hashed locally and verified against the blockchain</div>
+                  <div class="upload-filename" id="filename-verify"></div>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-verify-file">
+                <span class="spinner"></span>
+                <span class="btn-text">🔍 Verify Certificate</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ═══ Tab: Verify by Hash ═══ -->
+        <div class="tab-panel" id="panel-hash">
+          <div class="card animate-slide-up">
+            <form id="verify-hash-form">
+              <div class="form-group">
+                <label class="form-label" for="hash-input">SHA-256 Certificate Hash</label>
+                <input type="text" class="form-input" id="hash-input"
+                  placeholder="e.g. a1b2c3d4e5f6...  (64 hex characters)"
+                  pattern="[a-fA-F0-9]{64}"
+                  title="Enter a valid 64-character hex SHA-256 hash"
+                  required
+                  style="font-family: 'Courier New', monospace; letter-spacing: 1px;">
+                <div style="margin-top: var(--space-xs); font-size: 0.8rem; color: var(--text-muted);">
+                  Enter the 64-character hexadecimal SHA-256 hash of the certificate
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-verify-hash">
+                <span class="spinner"></span>
+                <span class="btn-text">🔍 Verify by Hash</span>
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- ═══ Verification In-Progress Animation ═══ -->
+        <div class="verify-animation" id="verify-animation">
+          <div class="verify-spinner"></div>
+          <div class="verify-status-text" id="verify-status-text">Hashing certificate...</div>
+        </div>
+
+        <!-- ═══ Verification Result ═══ -->
+        <div class="result-panel" id="verify-result">
+          <div class="result-header">
+            <div class="result-icon" id="verify-result-icon"></div>
+            <div>
+              <h4 class="result-title" id="verify-result-title"></h4>
+              <p style="color: var(--text-secondary); font-size: 0.9rem; margin-top: 4px;" id="verify-result-message"></p>
+            </div>
+          </div>
+          <div class="result-details" id="verify-result-details"></div>
+        </div>
+
+        <!-- Trust indicators -->
+        <div style="margin-top: var(--space-2xl); text-align: center;" class="animate-slide-up" style="animation-delay: 250ms;">
+          <div style="display: flex; justify-content: center; gap: var(--space-2xl); flex-wrap: wrap; margin-bottom: var(--space-md);">
+            <div style="display: flex; align-items: center; gap: var(--space-sm); color: var(--text-muted); font-size: 0.85rem;">
+              <span style="color: var(--status-success);">🔒</span> End-to-end cryptographic verification
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-sm); color: var(--text-muted); font-size: 0.85rem;">
+              <span style="color: var(--status-success);">⛓️</span> Ethereum blockchain backed
+            </div>
+            <div style="display: flex; align-items: center; gap: var(--space-sm); color: var(--text-muted); font-size: 0.85rem;">
+              <span style="color: var(--status-success);">🛡️</span> No PII stored on-chain
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>CertChain Verification Portal &middot; Powered by blockchain cryptography &middot; GDPR Compliant</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="/js/verify.js"></script>
+</body>
+</html>

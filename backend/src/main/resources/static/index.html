@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CertChain — Blockchain Certificate Verification</title>
+  <meta name="description" content="Tamper-proof digital certificate verification powered by blockchain technology. Issue, verify, and manage academic credentials with cryptographic security.">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="/" class="navbar-brand">
+          <span class="logo-icon">🔗</span>
+          CertChain
+        </a>
+        <ul class="navbar-nav">
+          <li><a href="/admin.html">Institute Portal</a></li>
+          <li><a href="/verify.html">Verify Certificate</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="container">
+        <h1 class="animate-slide-up">
+          <span class="text-gradient">Blockchain-Powered</span><br>
+          Certificate Verification
+        </h1>
+        <p class="animate-slide-up" style="animation-delay: 100ms;">
+          Issue tamper-proof digital certificates and verify their authenticity
+          instantly using cryptographic hashing and Ethereum smart contracts.
+        </p>
+
+        <!-- Blockchain visual -->
+        <div class="blockchain-visual animate-slide-up" style="animation-delay: 200ms;">
+          <div class="chain-block">📄</div>
+          <div class="chain-link"></div>
+          <div class="chain-block">#️⃣</div>
+          <div class="chain-link"></div>
+          <div class="chain-block">⛓️</div>
+          <div class="chain-link"></div>
+          <div class="chain-block">✅</div>
+        </div>
+
+        <!-- Portal cards -->
+        <div class="portal-grid stagger-children">
+
+          <!-- Institute Portal -->
+          <a href="/admin.html" class="card portal-card" id="portal-institute">
+            <div class="card-header">
+              <div class="card-icon purple">🏛️</div>
+              <div>
+                <h3 class="card-title">Institute Portal</h3>
+              </div>
+            </div>
+            <p class="card-description">
+              Issue and manage digital certificates for your students.
+              Upload PDFs, register hashes on-chain, and revoke credentials
+              when needed — all from a single dashboard.
+            </p>
+            <ul style="list-style: none; margin-top: 1rem; display: grid; gap: 0.5rem;">
+              <li style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                <span style="color: var(--brand-primary-light);">✦</span> Single & batch certificate issuance
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                <span style="color: var(--brand-primary-light);">✦</span> Merkle tree for gas-efficient batches
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                <span style="color: var(--brand-primary-light);">✦</span> On-chain revocation registry
+              </li>
+            </ul>
+            <div class="card-footer">
+              Open Institute Dashboard <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <!-- Employer Portal -->
+          <a href="/verify.html" class="card portal-card" id="portal-employer">
+            <div class="card-header">
+              <div class="card-icon teal">🔍</div>
+              <div>
+                <h3 class="card-title">Employer Verification</h3>
+              </div>
+            </div>
+            <p class="card-description">
+              Instantly verify the authenticity of a candidate's certificate.
+              Upload the PDF or enter the document hash — the blockchain
+              confirms whether it's genuine or tampered with.
+            </p>
+            <ul style="list-style: none; margin-top: 1rem; display: grid; gap: 0.5rem;">
+              <li style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                <span style="color: var(--brand-secondary);">✦</span> Upload PDF for instant verification
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                <span style="color: var(--brand-secondary);">✦</span> Verify by SHA-256 hash
+              </li>
+              <li style="display: flex; align-items: center; gap: 0.5rem; color: var(--text-secondary); font-size: 0.9rem;">
+                <span style="color: var(--brand-secondary);">✦</span> Tamper-proof blockchain confirmation
+              </li>
+            </ul>
+            <div class="card-footer">
+              Open Verification Portal <span class="arrow">→</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="section">
+      <div class="container">
+        <div class="section-header" style="text-align: center;">
+          <h2 class="section-title text-gradient">How It Works</h2>
+          <p class="section-subtitle">A three-step process secured by cryptography and blockchain technology</p>
+        </div>
+        <div class="portal-grid stagger-children" style="margin-top: 2rem;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon purple" style="font-size: 1.75rem;">①</div>
+              <div>
+                <h4 class="card-title">Hash</h4>
+              </div>
+            </div>
+            <p class="card-description">
+              The certificate PDF is run through SHA-256 to produce a unique
+              64-character fingerprint. Any change — even a single pixel —
+              produces a completely different hash.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon teal" style="font-size: 1.75rem;">②</div>
+              <div>
+                <h4 class="card-title">Record</h4>
+              </div>
+            </div>
+            <p class="card-description">
+              The hash is recorded on the Ethereum blockchain via a smart contract.
+              Once written, it cannot be altered or deleted — providing an
+              immutable proof of issuance.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-header">
+              <div class="card-icon pink" style="font-size: 1.75rem;">③</div>
+              <div>
+                <h4 class="card-title">Verify</h4>
+              </div>
+            </div>
+            <p class="card-description">
+              Anyone can verify a certificate by uploading it. The system
+              re-computes the hash and checks it against the blockchain.
+              A match means the document is authentic and unaltered.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>CertChain — Blockchain-Based Certificate Verification &middot; No PII stored on-chain &middot; GDPR Compliant</p>
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Institute Dashboard — CertChain</title>
+  <meta name="description" content="Issue, manage, and revoke digital certificates from your university dashboard. Powered by blockchain technology.">
+  <link rel="stylesheet" href="/css/styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="container">
+        <a href="/" class="navbar-brand">
+          <span class="logo-icon">🔗</span>
+          CertChain
+        </a>
+        <ul class="navbar-nav">
+          <li><a href="/admin.html" class="active">Institute Portal</a></li>
+          <li><a href="/verify.html">Verify Certificate</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="section">
+      <div class="container">
+
+        <!-- Page Header -->
+        <div class="section-header animate-slide-up">
+          <h1 class="section-title">
+            <span class="text-gradient">🏛️ Institute Dashboard</span>
+          </h1>
+          <p class="section-subtitle">
+            Issue and manage blockchain-verified digital certificates
+          </p>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid animate-slide-up" id="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, rgba(108,92,231,0.2), rgba(108,92,231,0.05)); color: var(--brand-primary-light);">📜</div>
+            <div class="stat-content">
+              <div class="stat-value" id="stat-total">0</div>
+              <div class="stat-label">Total Issued</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, rgba(0,184,148,0.2), rgba(0,184,148,0.05)); color: var(--status-success);">✅</div>
+            <div class="stat-content">
+              <div class="stat-value" id="stat-active">0</div>
+              <div class="stat-label">Active</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, rgba(255,107,107,0.2), rgba(255,107,107,0.05)); color: var(--status-error);">🚫</div>
+            <div class="stat-content">
+              <div class="stat-value" id="stat-revoked">0</div>
+              <div class="stat-label">Revoked</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon" style="background: linear-gradient(135deg, rgba(116,185,255,0.2), rgba(116,185,255,0.05)); color: var(--status-info);">⛓️</div>
+            <div class="stat-content">
+              <div class="stat-value" id="stat-onchain">—</div>
+              <div class="stat-label">On-chain TXs</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs animate-slide-up" style="animation-delay: 100ms;">
+          <button class="tab-btn active" data-tab="issue" id="tab-issue">Issue Certificate</button>
+          <button class="tab-btn" data-tab="batch" id="tab-batch">Batch Issue</button>
+          <button class="tab-btn" data-tab="manage" id="tab-manage">Manage Certificates</button>
+        </div>
+
+        <!-- ═══ Tab: Issue Single Certificate ═══ -->
+        <div class="tab-panel active" id="panel-issue">
+          <div class="card animate-slide-up" style="animation-delay: 150ms;">
+            <h3 style="margin-bottom: var(--space-lg);">Issue a New Certificate</h3>
+            <form id="issue-form">
+              <!-- File Upload -->
+              <div class="form-group">
+                <label class="form-label">Certificate PDF</label>
+                <div class="upload-zone" id="upload-zone-single">
+                  <input type="file" accept=".pdf" id="file-single" required>
+                  <div class="upload-icon">📄</div>
+                  <div class="upload-text">Drop your PDF here or click to browse</div>
+                  <div class="upload-hint">Maximum file size: 10 MB</div>
+                  <div class="upload-filename" id="filename-single"></div>
+                </div>
+              </div>
+
+              <!-- Metadata Fields -->
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="student-name">Student Name</label>
+                  <input type="text" class="form-input" id="student-name" placeholder="e.g. Alice Johnson" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="university-name">University Name</label>
+                  <input type="text" class="form-input" id="university-name" placeholder="e.g. MIT" required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="course-name">Course / Degree</label>
+                  <input type="text" class="form-input" id="course-name" placeholder="e.g. Computer Science" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="issue-date">Issue Date</label>
+                  <input type="date" class="form-input" id="issue-date" required>
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-lg btn-block" id="btn-issue">
+                <span class="spinner"></span>
+                <span class="btn-text">🔗 Issue Certificate on Blockchain</span>
+              </button>
+            </form>
+
+            <!-- Result -->
+            <div class="result-panel" id="issue-result">
+              <div class="result-header">
+                <div class="result-icon" id="issue-result-icon"></div>
+                <div>
+                  <h4 class="result-title" id="issue-result-title"></h4>
+                </div>
+              </div>
+              <div class="result-details" id="issue-result-details"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ Tab: Batch Issue ═══ -->
+        <div class="tab-panel" id="panel-batch">
+          <div class="card animate-slide-up">
+            <h3 style="margin-bottom: var(--space-sm);">Batch Issue via Merkle Tree</h3>
+            <p class="text-muted" style="margin-bottom: var(--space-lg); font-size: 0.9rem;">
+              Upload multiple PDFs and metadata. Only the Merkle root is stored on-chain —
+              saving gas while maintaining verifiability for each certificate.
+            </p>
+
+            <form id="batch-form">
+              <!-- Multiple file upload -->
+              <div class="form-group">
+                <label class="form-label">Certificate PDFs</label>
+                <div class="upload-zone" id="upload-zone-batch">
+                  <input type="file" accept=".pdf" multiple id="files-batch" required>
+                  <div class="upload-icon">📦</div>
+                  <div class="upload-text">Drop multiple PDFs here or click to browse</div>
+                  <div class="upload-hint">Select all certificate files for this batch</div>
+                  <div class="upload-filename" id="filename-batch"></div>
+                </div>
+              </div>
+
+              <!-- Batch metadata template -->
+              <div class="form-group">
+                <label class="form-label">Batch Metadata (JSON Array)</label>
+                <textarea class="form-textarea" id="batch-metadata" rows="8" required
+                  placeholder='[
+  {
+    "studentName": "Alice Johnson",
+    "universityName": "MIT",
+    "courseName": "Computer Science",
+    "issueDate": "2024-06-15"
+  },
+  {
+    "studentName": "Bob Smith",
+    "universityName": "MIT",
+    "courseName": "Mathematics",
+    "issueDate": "2024-06-15"
+  }
+]'></textarea>
+                <div style="margin-top: var(--space-xs); font-size: 0.8rem; color: var(--text-muted);">
+                  Ensure the number of JSON entries matches the number of PDF files.
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-success btn-lg btn-block" id="btn-batch">
+                <span class="spinner"></span>
+                <span class="btn-text">🌳 Issue Batch with Merkle Tree</span>
+              </button>
+            </form>
+
+            <!-- Batch Result -->
+            <div class="result-panel" id="batch-result">
+              <div class="result-header">
+                <div class="result-icon" id="batch-result-icon"></div>
+                <div>
+                  <h4 class="result-title" id="batch-result-title"></h4>
+                </div>
+              </div>
+              <div class="result-details" id="batch-result-details"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ═══ Tab: Manage Certificates ═══ -->
+        <div class="tab-panel" id="panel-manage">
+          <div class="card animate-slide-up">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-lg);">
+              <h3>Issued Certificates</h3>
+              <button class="btn btn-secondary" id="btn-refresh" onclick="loadCertificates()">
+                🔄 Refresh
+              </button>
+            </div>
+
+            <div class="table-wrapper" id="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>University</th>
+                    <th>Hash</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="cert-table-body">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Empty state -->
+            <div class="empty-state" id="empty-state">
+              <div class="empty-state-icon">📭</div>
+              <p class="empty-state-text">No certificates issued yet</p>
+              <p class="empty-state-hint">Issue your first certificate to see it here</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- Revoke Confirmation Modal -->
+    <div class="modal-overlay" id="revoke-modal">
+      <div class="modal">
+        <h3 class="modal-title">⚠️ Revoke Certificate</h3>
+        <div class="modal-body">
+          <p>Are you sure you want to revoke this certificate? This action will mark it as invalid on the blockchain.</p>
+          <div class="hash-display" style="margin-top: 1rem;" id="revoke-hash-display">
+            <span id="revoke-hash-text"></span>
+          </div>
+        </div>
+        <div class="modal-actions">
+          <button class="btn btn-secondary" onclick="closeRevokeModal()">Cancel</button>
+          <button class="btn btn-danger" id="btn-confirm-revoke" onclick="confirmRevoke()">
+            <span class="spinner"></span>
+            <span class="btn-text">Revoke Certificate</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <p>CertChain Institute Portal &middot; Certificates are secured on the Ethereum blockchain</p>
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>
