@@ -5,16 +5,15 @@ FROM gradle:8-jdk17 AS builder
 
 WORKDIR /workspace
 
-# Copy Gradle wrapper & config first (layer caching)
+# Copy Gradle config (layer caching)
 COPY build.gradle settings.gradle ./
-COPY gradle ./gradle
-COPY gradlew ./
 
 # Copy source code
 COPY src ./src
 
 # Build the fat JAR (skip tests for faster builds)
-RUN chmod +x gradlew && ./gradlew bootJar -x test --no-daemon
+# Using gradle from the base image (gradle:8-jdk17 has it preinstalled)
+RUN gradle bootJar -x test --no-daemon
 
 # ============================================================
 #  Stage 2 — Slim Runtime
