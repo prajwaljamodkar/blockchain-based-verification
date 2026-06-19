@@ -32,7 +32,7 @@ public class Web3jConfig {
     private static final Logger log = LoggerFactory.getLogger(Web3jConfig.class);
 
     // Gas parameters — tuned for testnets (Sepolia etc.)
-    private static final BigInteger GAS_PRICE = BigInteger.valueOf(2_000_000_000L);  // 2 Gwei
+    private static final BigInteger GAS_PRICE = BigInteger.valueOf(20_000_000_000L); // 20 Gwei
     private static final BigInteger GAS_LIMIT = BigInteger.valueOf(300_000L);        // 300K gas
 
     @Value("${blockchain.node-url:}")
