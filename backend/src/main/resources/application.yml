@@ -1,5 +1,6 @@
 server:
-  port: 8080
+  port: ${PORT:8080}
+  address: 0.0.0.0
 
 spring:
   servlet:
@@ -30,9 +31,25 @@ blockchain:
 
 # ── File storage ────────────────────────────────────────
 storage:
-  upload-dir: ./certificate-storage
+  upload-dir: ${STORAGE_UPLOAD_DIR:./certificate-storage}
 
 logging:
   level:
     com.certchain: DEBUG
     org.web3j: INFO
+
+---
+# ── Production Profile (activated when DATABASE_URL is set) ──
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: ${DATABASE_URL:}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+  h2:
+    console:
+      enabled: false

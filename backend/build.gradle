@@ -27,8 +27,11 @@ dependencies {
     implementation 'org.web3j:core:4.12.3'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-    // H2 in-memory database (swap for PostgreSQL driver in production)
+    // H2 in-memory database (default for local dev)
     runtimeOnly 'com.h2database:h2'
+
+    // PostgreSQL (production — used on Render when DATABASE_URL is set)
+    runtimeOnly 'org.postgresql:postgresql'
 
     // Lombok (optional but reduces boilerplate)
     compileOnly 'org.projectlombok:lombok'

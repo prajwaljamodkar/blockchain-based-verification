@@ -1,0 +1,43 @@
+# === Build artifacts ===
+backend/.gradle/
+backend/build/
+backend/certificate-storage/
+backend/node_modules/
+
+blockchain/node_modules/
+blockchain/artifacts/
+blockchain/cache/
+blockchain/typechain-types/
+
+# === IDE ===
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+*.swp
+*.swo
+
+# === Git ===
+.git/
+.gitignore
+
+# === Environment & Secrets ===
+.env
+.env.*
+backend/.env
+
+# === OS ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+
+# === Docker ===
+Dockerfile
+.dockerignore
+
+# === Misc ===
+README.md
+package-lock.json
