@@ -1,0 +1,12 @@
+.gradle/
+build/
+certificate-storage/
+node_modules/
+.idea/
+.vscode/
+.env
+.env.*
+*.iml
+*.log
+.DS_Store
+Thumbs.db
