@@ -1,32 +1,37 @@
-    console.log("DEPLOY SCRIPT UPDATED");
     const hre = require("hardhat");
 
 async function main() {
-
-
   console.log("Deploying CertificateRegistry...");
+  console.log(`Network: ${hre.network.name}`);
 
   const CertificateRegistry = await hre.ethers.getContractFactory("CertificateRegistry");
 
-  // The constructor now requires a backendWallet address.
-  // We use the second Hardhat test account so the backend signs with a different key than the owner.
   const signers = await hre.ethers.getSigners();
-  const owner = signers[0];
-  const backendWallet = signers[1]; // Hardhat Account #1
+  const deployer = signers[0];
+
+  console.log(`Deployer address: ${deployer.address}`);
+
+  // On Sepolia (single account) — the deployer IS the backend wallet.
+  // On localhost (multiple accounts) — use Account #1 as backend wallet.
+  const backendWallet = signers.length > 1 ? signers[1] : deployer;
 
   const registry = await CertificateRegistry.deploy(backendWallet.address);
   await registry.waitForDeployment();
 
   const address = await registry.getAddress();
-  console.log(`CertificateRegistry deployed to: ${address}`);
-  console.log(`Owner (Account #0):          ${owner.address}`);
-  console.log(`Backend Wallet (Account #1): ${backendWallet.address}`);
+
   console.log("");
-  console.log("── Next Steps ──────────────────────────────────────────");
-  console.log(`1. Set CONTRACT_ADDRESS=${address} in your backend environment`);
-  console.log("2. Copy ABI from blockchain/artifacts/contracts/CertificateRegistry.sol/CertificateRegistry.json");
-  console.log("3. Generate Java wrapper: web3j generate solidity ...");
-  console.log("────────────────────────────────────────────────────────");
+  console.log("════════════════════════════════════════════════════════");
+  console.log(`  CertificateRegistry deployed to: ${address}`);
+  console.log(`  Owner / Deployer:    ${deployer.address}`);
+  console.log(`  Backend Wallet:      ${backendWallet.address}`);
+  console.log("════════════════════════════════════════════════════════");
+  console.log("");
+  console.log("Set these on Render:");
+  console.log(`  CONTRACT_ADDRESS=${address}`);
+  console.log(`  WALLET_PRIVATE_KEY=<your-deployer-private-key>`);
+  console.log(`  BLOCKCHAIN_NODE_URL=<your-sepolia-rpc-url>`);
+  console.log("");
 }
 
 main()
